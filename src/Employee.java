@@ -100,8 +100,36 @@ public class Employee {
 
                 case 3:
                     System.out.println("search data");
-
-
+                    System.out.println("enter employee code:");
+                    empcode=s.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
+                        String sql="SELECT  `empcode`, `empname`, `designation`, `salary`, `companyname`, `phno`, `emailid`, `password` FROM `employees` WHERE `empcode`="+String.valueOf(empcode);
+                        Statement stmt = con.createStatement();
+                        ResultSet rs= stmt.executeQuery(sql);
+                        while(rs.next()){
+                            String getempcode=rs.getString("empcode");
+                            String getempname=rs.getString("empname");
+                            String getdesignation=rs.getString("designation");
+                            String getsalary=rs.getString("salary");
+                            String getcompanyname=rs.getString("companyname");
+                            String getphno=rs.getString("phno");
+                            String getemailid=rs.getString("emailid");
+                            String getpassword=rs.getString("password");
+                            System.out.println("Empcode="+getempcode);
+                            System.out.println("Empname="+getempname);
+                            System.out.println("designation="+getdesignation);
+                            System.out.println("salary="+getsalary);
+                            System.out.println("companyname="+getcompanyname);
+                            System.out.println("phoneno="+getphno);
+                            System.out.println("emialid="+getemailid);
+                            System.out.println("password="+getpassword+"\n");
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("delete data");
