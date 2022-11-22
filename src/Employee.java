@@ -28,22 +28,154 @@ public class Employee {
             {
                 case 1:
                     System.out.println("insertdata");
+                    System.out.println("enter employee code");
+                    empcode=s.nextInt();
+                    System.out.println("enter employee name");
+                    empname=s.next();
+                    System.out.println("enter employee desigantion");
+                    designation=s.next();
+                    System.out.println("enter employee salary");
+                    salary=s.nextInt();
+                    System.out.println("enter company name");
+                    companyname=s.next();
+                    System.out.println("enter phone number");
+                    phno=s.nextInt();
+                    System.out.println("enter email id");
+                    emailid=s.next();
+                    System.out.println("enter password");
+                    password=s.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
+                        String sql="INSERT INTO `employees`( `empcode`, `empname`, `designation`, `salary`, `companyname`, `phno`, `emailid`, `password`) VALUES (?,?,?,?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setInt(1,empcode);
+                        stmt.setString(2,empname);
+                        stmt.setString(3,designation);
+                        stmt.setString(4,companyname );
+                        stmt.setInt(5,phno);
+                        stmt.setString(6,emailid);
+                        stmt.setString(7,password);
 
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     System.out.println("select data");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
+                        String sql="SELECT  `empcode`, `empname`, `designation`, `salary`, `companyname`, `phno`, `emailid`, `password` FROM `employees` ";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs= stmt.executeQuery(sql);
+                        while (rs.next()){
+                            String getempcode=rs.getString("empcode");
+                            String getempname=rs.getString("empname");
+                            String getdesignation=rs.getString("designation");
+                            String getsalary=rs.getString("salary");
+                            String getcompanyname=rs.getString("companyname");
+                            String getphno=rs.getString("phno");
+                            String getemailid=rs.getString("emailid");
+                            String getpassword=rs.getString("password");
+                            System.out.println("Empcode="+getempcode);
+                            System.out.println("Empname="+getempname);
+                            System.out.println("designation="+getdesignation);
+                            System.out.println("salary="+getsalary);
+                            System.out.println("companyname="+getcompanyname);
+                            System.out.println("phno="+getphno);
+                            System.out.println("emailid="+getemailid);
+                            System.out.println("password="+getpassword+"\n");
+                        }
 
-
-
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
+
+
+
+
                 case 3:
                     System.out.println("search data");
-
-
+                    System.out.println("enter employee code:");
+                    empcode=s.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
+                        String sql="SELECT  `empcode`, `empname`, `designation`, `salary`, `companyname`, `phno`, `emailid`, `password` FROM `employees` WHERE `empcode`="+String.valueOf(empcode);
+                        Statement stmt = con.createStatement();
+                        ResultSet rs= stmt.executeQuery(sql);
+                        while(rs.next()){
+                            String getempcode=rs.getString("empcode");
+                            String getempname=rs.getString("empname");
+                            String getdesignation=rs.getString("designation");
+                            String getsalary=rs.getString("salary");
+                            String getcompanyname=rs.getString("companyname");
+                            String getphno=rs.getString("phno");
+                            String getemailid=rs.getString("emailid");
+                            String getpassword=rs.getString("password");
+                            System.out.println("Empcode="+getempcode);
+                            System.out.println("Empname="+getempname);
+                            System.out.println("designation="+getdesignation);
+                            System.out.println("salary="+getsalary);
+                            System.out.println("companyname="+getcompanyname);
+                            System.out.println("phoneno="+getphno);
+                            System.out.println("emialid="+getemailid);
+                            System.out.println("password="+getpassword+"\n");
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Update the employee details ");
+                    System.out.println("Enter the empcode");
+                    int empCode = s.nextInt();
+                    System.out.println("Enter the name of the employee ");
+                    String Name = s.next();
+                    System.out.println("Enter the designation ");
+                    String Design = s.next();
+                    System.out.println("Enter the salary of the employee");
+                    int Salary = s.nextInt();
+                    System.out.println("Enter the company name of the employeee");
+                    String CompName = s.next();
+                    System.out.println("Enter the phone number of the employee ");
+                    String Phone = s.next();
+                    System.out.println("Enter the Email id of the employee ");
+                    String Email = s.next();
+                    System.out.println("Enter the password");
+                    String Password = s.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb", "root", "");
+                        String sql = "UPDATE `employees` SET `empcode`='"+empCode+"',`empname`='"+Name+"',`designation`='"+Design+"',`salary`='"+Salary+"',`companyname`='"+CompName+"',`phno`='"+Phone+"',`emailid`='"+Email+"',`password`='"+Password+"' WHERE `empcode`="+empCode;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("delete data");
-                    break;
+                    System.out.println("enter employee code:");
+                    String code=s.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/employeedb","root","");
+                        String sql="DELETE FROM `employees` WHERE `empcode`="+code;
+                        Statement stmt =con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("deleted successfully");
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
                 case 6:
                     System.out.println("exit");
                     System.exit(0);
